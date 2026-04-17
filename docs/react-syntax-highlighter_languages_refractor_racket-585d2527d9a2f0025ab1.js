@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkeagleeye_dev=self.webpackChunkeagleeye_dev||[]).push([[5254],{5518:function(e,a,s){var r=s(5087);function t(e){e.register(r),e.languages.racket=e.languages.extend("scheme",{"lambda-parameter":{pattern:/([(\[]lambda\s+[(\[])[^()\[\]'\s]+/,lookbehind:!0}}),e.languages.insertBefore("racket","string",{lang:{pattern:/^#lang.+/m,greedy:!0,alias:"keyword"}}),e.languages.rkt=e.languages.racket}e.exports=t,t.displayName="racket",t.aliases=["rkt"]}}]);
+//# sourceMappingURL=react-syntax-highlighter_languages_refractor_racket-585d2527d9a2f0025ab1.js.map
