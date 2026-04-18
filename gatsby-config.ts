@@ -18,7 +18,7 @@ const config: GatsbyConfig = {
         background_color: siteMetadata.device.backgroundColor,
         description: siteMetadata.description,
         display: 'standalone',
-        icon: "src/icon__OLD.png", // This path is relative to the root of the site.
+        icon: "src/icon.png", // This path is relative to the root of the site.
         // An optional attribute which provides support for CORS check.
         // If you do not provide a crossOrigin option, it will skip CORS for manifest.
         // Any invalid keyword or empty string defaults to `anonymous`
