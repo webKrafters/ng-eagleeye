@@ -1,4 +1,5 @@
 import type {
+	CSSProperties,
 	NamedExoticComponent,
 	ReactNode
 } from 'react';
@@ -7,6 +8,7 @@ import React, {
 	forwardRef,
 	useCallback,
 	useEffect,
+	useMemo,
 	useState
 } from 'react';
 
@@ -23,14 +25,16 @@ interface IProps {
 	currentIndex? : number;
 	onTabChange?: (newTab : Content) => void;
 	options : Array<Content>;
+	selectStyle? : CSSProperties;
 }
 
 export type Props = Omit<JSX.IntrinsicElements[ "div" ], "children"> & IProps
 
 const SelectTab : NamedExoticComponent<Props> = forwardRef<
 	HTMLDivElement, Props
->(({ className, onTabChange = noop, options, currentIndex = 0, ...props }, ref ) => {
+>(({ className, onTabChange = noop, options, selectStyle = {}, currentIndex = 0, ...props }, ref ) => {
 	const [ content, setContent ] = useState( options[ currentIndex ] );
+	const style = useMemo(() => ({ width: 132, ...selectStyle }), [ selectStyle ]);
 	useEffect(
 		() => setContent( options[ currentIndex ] ),
 		[ options, currentIndex ]
@@ -51,7 +55,7 @@ const SelectTab : NamedExoticComponent<Props> = forwardRef<
 				onSelect={ onSelect }
 				options={ options }
 				popupClassName="select-tab__dropdown"
-				style={{ width: 132 }}
+				style={ style }
 				value={ content }
 			/>
 			<div className="content">

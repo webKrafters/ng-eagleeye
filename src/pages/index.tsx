@@ -13,6 +13,7 @@ import Name from '../partials/name';
 import Paragraph from '../partials/paragraph';
 
 import '../partials/contents/index-page/style.scss';
+import NotePad from '../partials/pad/note';
 
 export type Props = PageProps<{
 	site : {
@@ -28,10 +29,10 @@ export type Props = PageProps<{
 const IndexPage : React.FC<Props> = ({ className, data }) => {
 	return (
 		<article className={ `index-page ${ className }` }>
-			<h4 style={{ color: '#8001c6' }}>
-				Site currently under construction. Please stay tuned.
-			</h4>
-			<h1>Welcome to <Name /> JS!</h1>
+			<h1>Welcome to <Name /></h1>
+			<NotePad>Compatible with Angular 17+.</NotePad>
+			<Paragraph>An intuitive reactive context based Angular state manager. Flexible. Simplified immutable application state management. Create once: use everywhere.</Paragraph>
+			<Paragraph>Supports for framework-agnostic state sharing among applications OOB. Simply create an <Anchor to="https://auto-immutable.js.org/intro/">Auto Immutable</Anchor> instance to pass around as the <code>value</code> argument for this or any <Anchor to="https://eagleeye.js.org">Eagle Eye</Anchor> based <Anchor to="https://www.npmjs.com/package/@webkrafters/eagleeye?activeTab=readme#usage">state manager</Anchor> instances.</Paragraph>
 			<Paragraph>
 				<label>
 					<b>Official:{ ' ' }</b>
@@ -40,10 +41,6 @@ const IndexPage : React.FC<Props> = ({ className, data }) => {
 					</Anchor>
 				</label>
 			</Paragraph>
-			<Paragraph>Framework-agnostic native-javasacript change-stream capable immutable state manager.</Paragraph>
-			<Paragraph>Not logically bound to any section of an application. A single instance may be deployed anywhere within an application as needed.</Paragraph>
-			<Paragraph>Not bound by quantity. As many instances as needed may be created and deployed simultaneously anywhere within an application.</Paragraph>
-			<Paragraph>Supports framework-agnostic state sharing among applications. Simply create an <Anchor to="https://auto-immutable.js.org/intro/">Auto Immutable</Anchor> instance to pass around as the <code>value</code> argument for this or any <Anchor to="/">Eagle Eye</Anchor> based state manager instances.</Paragraph>
 			<Paragraph className="installation">
 				<header>Installation:</header>
 				<label>
@@ -55,11 +52,29 @@ const IndexPage : React.FC<Props> = ({ className, data }) => {
 			</Paragraph>
 			<Paragraph>
 				<label>
-					<b>Play with a demo app here on:{ ' ' }</b>
-					<Anchor to={ data?.site.siteMetadata.url.demo as string }>
-						Code Sandbox { '(' }via React Observable Context JS{ ')' }
+					<b>Usage:{ ' ' }</b>
+					<Anchor style={{ fontWeight: 500 }} to="/getting-started#usage">
+						Getting Started.
 					</Anchor>
 				</label>
+			</Paragraph>
+			<Paragraph>
+				<label style={{ display: "inline-block" }}>
+					<b>Play with a demo app here on:{ ' ' }</b>
+					<Anchor style={{ fontWeight: 500 }} to={ data?.site.siteMetadata.url.demo as string }>
+						Code Sandbox
+					</Anchor>
+				</label>
+				<div>
+					Should the sandbox fail to load app, please clone and run the demo repo as follows.
+					<ol>
+						<li>open your command line interface in your local machine.</li>
+						<li>run <code>git clone https://github.com/webKrafters/ng-eagleeye-app.git</code></li>
+						<li>run <code>cd ng-eagleeye-app</code></li>
+						<li>run <code>npm install &amp;&amp; npm run dev</code></li>
+						<li>open the URL displayed at then of this script run.</li>
+					</ol>
+				</div>
 			</Paragraph>
 			<Paragraph>
 				<label>
@@ -69,9 +84,11 @@ const IndexPage : React.FC<Props> = ({ className, data }) => {
 			</Paragraph>
 			<h2><Name />. Why now?</h2>
 			<ul>
-				<li>An auto-immutable update friendly state management class. See <Anchor to="/concepts/channel/setstate"><code>channel.setState</code></Anchor> and global <Anchor to="/global-access#external-apis"><code>store.setState</code></Anchor>.</li>
-				<li>A streamable state manager -- automatically notifies <Anchor to="/concepts/client">clients</Anchor> of new changes to the state through manual <Anchor to="/global-access#external-apis">subscription</Anchor> and through <Anchor to="/concepts/channel">change stream channels</Anchor>.</li>
-				<li>Recognizes <strong>negative array indexing</strong>. Please see <Anchor to="/concepts/property-path">Property Path</Anchor> and <code>channel.setState</code> <Anchor to="/concepts/channel/setstate#indexing">Indexing</Anchor>.</li>
+				<li>Auto-immutable update-friendly context. See <Anchor to="/concepts/store/setstate"><code>store.setState</code></Anchor>.</li>
+				<li>A context bearing an observable consumer <Anchor to="/concepts/store">store</Anchor>.</li>
+				<li>Recognizes <strong>negative array indexing</strong>. Please see <Anchor to="/concepts/property-path">Property Path</Anchor> and <code>store.setState</code> <Anchor to="/concepts/store/setstate#indexing">Indexing</Anchor>.</li>
+				<li>Only updates subscribing components (<Anchor to="/concepts/client">clients</Anchor>) on context state changes.</li>
+				<li>Subscribing component decides which context state properties' changes to trigger its update.</li>
 			</ul>
 			<div>May see features history at <Anchor to="/history/features">What's Changed?</Anchor></div>
 		</article>

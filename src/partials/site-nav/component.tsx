@@ -33,16 +33,11 @@ const NavLinkIndent4 = createIndentedNavLink( 4 );
 const Component : React.FC = () => (
 	<nav className="site-nav">
 		<NavLink to="/">Introduction</NavLink>
-		<NavLink className="group-link" to="/getting-started">Getting Started</NavLink>
-		<NavLinkIndent1 to="/getting-started#create-context-usage">Creating <Name /></NavLinkIndent1>
-		<NavLinkIndent1 to="/getting-started#connect-usage">Consuming context { '(' }hoc method{ ')' }</NavLinkIndent1>
-		<NavLinkIndent1 to="/getting-started#usecontext-usage">Consuming context { '(' }hook with memo method{ ')' }</NavLinkIndent1>
-		<NavLink to="/external-access">External Access</NavLink>
-		<NavLink className="group-link" to="/api">API</NavLink>
-		<NavLinkIndent1 to="/api#connect">Connect HoC</NavLinkIndent1>
-		<NavLinkIndent1 to="/api#create-context">CreateContext Function</NavLinkIndent1>
-		<NavLinkIndent1 to="/api#usage-error">UsageError Exception</NavLinkIndent1>
-		<NavLinkIndent1 to="/api#usecontext">UseContext Hook</NavLinkIndent1>
+		<NavLink to="/getting-started">Getting Started</NavLink>
+		<NavLink className="group-link" to="/overview"><Name /> Overview</NavLink>
+		<NavLinkIndent1 to="/overview/create">Creating an <Name /> Context Service</NavLinkIndent1>
+		<NavLinkIndent1 to="/overview/direct-usage">Consuming Context { '(' }the Direct Method{ ')' }</NavLinkIndent1>
+		<NavLinkIndent1 to="/overview/streaming">Consuming Context { '(' }Using Streams{ ')' }</NavLinkIndent1>
 		<NavLink className="group-link" to="/concepts/client">Concepts</NavLink>
 		<NavLinkIndent1 to="/concepts/client">Client</NavLinkIndent1>
 		<NavLinkIndent1 to="/concepts/prehooks">Prehooks</NavLinkIndent1>
