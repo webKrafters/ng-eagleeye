@@ -133,7 +133,7 @@ const CreatePage : React.FC<{className? : string}> = ({ className }) => (
         <h4>Custom Case</h4>
         <Paragraph>The follwing is a complete view of a <code>provideContextService{ "(...)" }</code>. Any omitted property is supplied a default equivalent.</Paragraph>
         <Paragraph><CodeBlock>{ provide_at_root }</CodeBlock></Paragraph>
-        <h3>Providing the <code>ContextService</code> at a Scope Level</h3>
+        <h3 id="limited-provision">Providing the <code>ContextService</code> at a Scope Level</h3>
         The provision of a new <code>ContextService</code> instance at any section of an application is identical to the requirement of doing same at the root level. The only difference is in the Angular DI interpretation.
         <ListItem><div>A <code>ContextService</code> instance is only accessible within the scope { "(" }i.e. the resource at the provision point, all of its child resources and descendants{ ")" }.</div></ListItem>
         <ListItem><div>A <code>ContextService</code> instance sharing identical <code>ref</code> config property with an earlier provided resource in the Angular DI chain overrides the earlier resource.</div></ListItem>

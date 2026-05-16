@@ -72,14 +72,14 @@ const selectorMap = {
 
 type MyStreamService = StreamService<LocalState, typeof selectorMap>;
 
-const contextRef = new InjectionToken<ContextService<State>>();
+const contextRef = new InjectionToken<ContextService<LocalState>>();
 
 @Component{
     providers: [
         ...,
         provideContextService({
-            attrs: { value: state },
-            ref: contextRef // <- ref so as not to override access to root ContextService
+            attrs: { value: localState },
+            ref: contextRef // <- assign custom reference handle so as not to override access to root ContextService.
         }),
         provideStreamService({
             contextRef, selectorMap

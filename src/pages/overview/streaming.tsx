@@ -81,7 +81,7 @@ export class TestComponent implements OnDestroy {
         this.contextService.store.resetState([ PATH ]);
     }
     private syncCurrentPoint() {
-        const point = this.contextService.store.getState([ PATH ])[ PATH ];
+        const point = this.contextService.store.getState([ PATH ]).a.c.e.g;
         return this.point.set( Number.isNumber( point ) ? point : -1 );
     }
 }`;

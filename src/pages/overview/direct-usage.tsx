@@ -32,11 +32,9 @@ export class StoreMonitor {
         this.cleanup();
         if( !store ) { return }
         this._store = store;
-        this._onEvent( this._store.getState() );
-        this._unsub = store.subscribe(
-            'data-updated',
-            () => this._onEvent( this._store.getState() )
-        );
+        this._onEvent(() => console.log( 'STATE: ', this._store.getState() ));
+        this._unsub = store.subscribe( 'data-updated', this._onEvent );
+        this._onEvent();
     }
     cleanup() {
         this._unsub?.();
@@ -91,7 +89,7 @@ export class TestComponent implements OnDestroy {
         this.contextService.store.resetState([ PATH ]);
     }
     private syncCurrentPoint() {
-        const point = this.contextService.store.getState([ PATH ])[ PATH ];
+        const point = this.contextService.store.getState([ PATH ]).a.c.e.g;
         return this.point.set( Number.isNumber( point ) ? point : -1 );
     }
 }`;
@@ -178,7 +176,7 @@ function BodyCurrent() {
                 <Paragraph><CodeBlock>{ setupCode }</CodeBlock></Paragraph>
             </div>
             <Alert title="Pro Tips">
-                <Paragraph>State references are always snapshots of the state at the time of access. In essence, the state returned by <code>context.store.getState(...)</code> are not affected by subsequent updates to the store's state. Any updates to this acquired state never affects the context's state. So therefore, the <strong>4</strong> considerations:</Paragraph>
+                <Paragraph>State references are always snapshots of the state at the time of access. In essence, the state returned by <code>context.store.getState(...)</code> is not affected by subsequent updates to the store's state. Any updates to this acquired state never affects the context's state. So therefore, the <strong>4</strong> considerations:</Paragraph>
                 <ListItem><div>use only the <code>context.store.setState(...)</code> to update the context internal store.</div></ListItem>
                 <ListItem><div><code>context.store.getState(...)</code> must be used to obtain the current state value.</div></ListItem>
                 <ListItem><div>use your <code>context.store.subscribe(...)</code> to manually subscribe to state changes and refresh your current state value in realtime.</div></ListItem>
