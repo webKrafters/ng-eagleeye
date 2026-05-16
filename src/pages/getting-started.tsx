@@ -160,7 +160,7 @@ export class SomeComponent implements OnDestroy {
     }
     private updateYear() { 
         const data = this.contextService.store.getState([ YEAR_PATH ]);
-        this.year = signal( data[ YEAR_PATH ] );
+        this.year = signal( data.a.b.x.y.z[ 0 ] );
     }
 };`;
 
