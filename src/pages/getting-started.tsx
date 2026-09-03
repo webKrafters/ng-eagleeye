@@ -12,11 +12,18 @@ import NotePad from '../partials/pad/note';
 import Paragraph from '../partials/paragraph';
 import SelectTab from '../partials/select-tab';
 import { Button } from 'antd';
+import VersionTabs from '../partials/version-tabs';
 
 const GettingStartedPage : React.FC<PageProps> = ({ className }) => (
     <article className={ `getting-started-page ${ className }` }>
         <h1>Getting Started</h1>
-        <BodyCurrent />
+        <VersionTabs options={[{
+            documentation: ( <BodyCurrent2_0 /> ),
+            version: [ 2, 0, 0 ]
+        }, {
+            documentation: ( <BodyCurrent /> ),
+            version: [ 1, 0, 0 ]
+        }]} />
     </article>
 );
 
@@ -51,7 +58,7 @@ export const appConfig: ApplicationConfig = {
   ]
 };`
 
-const creatorCode_scoped =
+const creatorCode_scoped_attr =
 `import {
     ContextService,
     StreamService,
@@ -87,8 +94,52 @@ const contextRef = new InjectionToken<ContextService<LocalState>>();
         ...
     ],
     ...
-}
-export class DemoComponent implements OnDestroy {
+}`;
+
+const creatorCode_scoped_attr_2_0 =
+`import {
+    ContextService,
+    StreamService,
+    provideContextService,
+    provideStreamService
+} from '@webkrafters/ng-eagleeye';
+
+import type { State } from './state';
+
+const localState = { name: { first: '', last: '' } };
+
+type LocalState = typeof localState;
+
+const selectorMap = {
+    firstName: 'name.first',
+    lastName: 'name.last'
+} as const;
+
+type MyStreamService = StreamService<LocalState, typeof selectorMap>;
+
+const clientId = 'DEMO_COMPONENT';
+
+const contextRef = new InjectionToken<ContextService<LocalState>>();
+
+@Component{
+    providers: [
+        ...,
+        provideContextService({
+            attrs: { value: localState },
+            ref: contextRef // <- assign custom reference handle so as not to override access to root ContextService.
+        }),
+        provideStreamService({
+            clientId,
+            contextRef,
+            selectorMap
+        }), // will stream the contextRef
+        ...
+    ],
+    ...
+}`;
+
+const creatorCode_scoped =
+`export class DemoComponent implements OnDestroy {
 
     // injects global context service if provided
     globalContextService = inject<ContextService<State>>( ContextService );
@@ -164,7 +215,7 @@ export class SomeComponent implements OnDestroy {
     }
 };`;
 
-const stream_usage =
+const stream_usage_attr =
 `import { ContextService, provideStreamService } from '@webkrafters/ng-eagleeye';
 
 import type { State } from './state';
@@ -180,8 +231,30 @@ type MyStreamService = StreamService<State, typeof selectorMap>;
         }) // will stream any closest available non-custom referenced ContextSevice higher in DI chain by default
     ],
     ...
-})
-export class SomeComponent {
+})`;
+
+const stream_usage_attr_2_0 =
+`import { ContextService, provideStreamService } from '@webkrafters/ng-eagleeye';
+
+import type { State } from './state';
+
+const clientId = 'SOME_COMPONENT';
+
+const selectorMap = { year: 'a.b.x.y.z[0]' } as const;
+
+type MyStreamService = StreamService<State, typeof selectorMap>;
+
+@Component({
+    providers: [
+        provideStreamService({
+            clientId, selectorMap
+        }) // will stream any closest available non-custom referenced ContextSevice higher in DI chain by default
+    ],
+    ...
+})`;
+
+const stream_usage =
+`export class SomeComponent {
     streamService = inject<MyStreamService>( StreamService );
     data : MyStreamService["data"];
     constructor() {
@@ -191,9 +264,26 @@ export class SomeComponent {
         const input = e.target as HTMLInputElement;
         this.streamService.setState({ a: { b: { c: input.value } } });
     }
-}`
+}`;
 
-function BodyCurrent() {
+function BodyCurrent2_0() {
+    return (
+        <Template
+            creatorAttr={ creatorCode_scoped_attr_2_0 }
+            streamAttr={ stream_usage_attr_2_0 }
+        />
+    );
+}
+
+function BodyCurrent() { return ( <Template /> ) }
+
+function Template({
+    creatorAttr = creatorCode_scoped_attr,
+    streamAttr = stream_usage_attr
+} : {
+    creatorAttr? : string;
+    streamAttr?: string;
+}) {
     const ctxSampleDivRef = useRef<HTMLDivElement>( null );
     const [ tabIndex, setTabIndex ] = useState( 0 );
     const showGlobalSample = useCallback(() => setTabIndex( 1 ), []);
@@ -239,7 +329,7 @@ function BodyCurrent() {
                             </Paragraph>
                             <Paragraph className="snippet-box">
                                 <Header>demo/demo.ts</Header>
-                                <CodeBlock>{ creatorCode_scoped }</CodeBlock>
+                                <CodeBlock>{ `${ creatorAttr }\n${ creatorCode_scoped }` }</CodeBlock>
                             </Paragraph>
                             <Paragraph>This Demo component creates a limited context along with a stream strictly for its own and its children's consumption while still maintaining direct access to the global ContextService { "(" }assuming that the global context service exists{ ")" }.</Paragraph>
                             <Paragraph>A provided <Name /> context service can be referenced or injected through its constructor <code>ContextService</code>. To provide it a custom reference, add a <code>ref</code> property. See more on this <Anchor to="/overview/create">here</Anchor>.</Paragraph>
@@ -290,7 +380,7 @@ function BodyCurrent() {
             </div>
             <div className="snippet-intro" id="connect-usage">
                 <h3 id="streaming">Joining the <Name /> Change Stream</h3>
-                <Anchor to="overview/streaming">
+                <Anchor to="/overview/streaming">
                     See StreamService overview here
                 </Anchor>
                 <Paragraph><Name /> change stream is a reactive store whose data are automatically changing to reflect most recent changes affecting them. </Paragraph>
@@ -301,7 +391,7 @@ function BodyCurrent() {
             </div>
             <Paragraph className="snippet-box">
                 <Header>stream-usage/stream-usage.ts</Header>
-                <CodeBlock>{ stream_usage }</CodeBlock>
+                <CodeBlock>{ `${ streamAttr }\n${ stream_usage }` }</CodeBlock>
             </Paragraph>
         </>
     );

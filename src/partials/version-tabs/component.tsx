@@ -94,7 +94,7 @@ const VersionTabs : FC<Props> = ({ options: sOptions, ...props }) => {
 			block: 'start'
 		});
 	}, [ sOptions ]);
-
+	
 	return ( <SelectTab { ...{ currentIndex, onTabChange, options, ...props } } /> );
 };
 
